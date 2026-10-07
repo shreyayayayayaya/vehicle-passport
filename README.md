@@ -1,18 +1,5 @@
-# Sample Hardhat Project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.js
-```
-
-**🚗 Vehicle Passport**
+**Vehicle Passport**
 
 The meter can lie. The record can't.
 
@@ -20,7 +7,7 @@ Vehicle Passport is a tamper-evident, VIN-linked vehicle history system designed
 
 It creates an append-only history of vehicle mileage, service records, corrections, and supporting evidence. Instead of relying only on the dashboard reading or scattered records, buyers can view a verifiable timeline and receive an explained verdict about whether the vehicle's history is Clean, Thin History, or Suspicious.
 
-**🎯 Problem**
+**Problem**
 
 Used-car buyers often have to rely on the odometer and seller-provided records. Odometers can be rolled back, while vehicle records are usually scattered across garages, insurers, manufacturers, and inspection centres.
 
@@ -28,7 +15,7 @@ Existing solutions often provide only a snapshot or a single source of informati
 
 Vehicle Passport brings multiple records together into one tamper-evident timeline with evidence-backed investigation.
 
-**💡 Solution**
+**Solution**
 
 Vehicle Passport works by:
 
@@ -41,7 +28,7 @@ Running rule-based analysis to detect rollback and history gaps
 Using an AI layer to explain the verdict in simple language
 Allowing owners to share the vehicle passport through a QR/link
 
-**🏗️ Architecture**
+**Architecture**
 
 1. Presentation Layer
 React + Vite
@@ -79,29 +66,46 @@ Gemini
 Converts the rule engine's result into a simple explanation
 The rules determine the verdict; the AI only explains it
 
-**🔄 Data Flow**
+**Data Flow**
 Issuer
+
    ↓
+   
 React Frontend
+
    ↓
+   
 ethers.js + MetaMask
+
    ↓
+   
 Solidity Smart Contract
+
    ↓
+   
 Append-only Vehicle Timeline
+
    ↓
+   
 Analysis Service
+
    ↓
+   
 Rule Engine
+
    ↓
+   
 AI Explanation
+
    ↓
+   
 Buyer / Owner
+
 Integrity Verification
 
 The system can verify the integrity of the vehicle history by replaying the contract rules and recomputing evidence hashes, then comparing them with the stored values.
 
-**🔐 Trust Model**
+**Trust Model**
 
 Vehicle Passport separates record integrity from record truth:
 
@@ -113,7 +117,7 @@ AI layer → explains the detected issues
 
 Blockchain cannot prove that an issuer's original reading is truthful. It proves that the record was not silently changed afterwards.
 
-**🛠️ Tech Stack**
+**Tech Stack**
 Layer	Technologies
 Frontend	React, Vite, TypeScript
 Blockchain	Solidity, EVM
@@ -125,7 +129,7 @@ AI	Gemini
 Styling	CSS
 Development	Git, npm
 
-**🚀 Setup**
+**Setup**
 Prerequisites
 
 Install:
@@ -171,7 +175,7 @@ Import the demo issuer account provided by the Hardhat node.
 
 For a fresh demo, run the reset script before starting the application.
 
-**📸 Screenshots**
+**Screenshots**
 Vehicle Passport
 
 Add screenshot of the main vehicle passport here.
@@ -200,23 +204,17 @@ Add screenshot of the issuer interface.
 
 
 
-**🔎 Example Use Case**
+**Example Use Case**
 
-A buyer is looking at a used car whose dashboard shows:
+A buyer is looking at a used car whose dashboard shows:55,310 km
 
-55,310 km
+The Vehicle Passport contains an earlier verified record showing:71,800 km
 
-The Vehicle Passport contains an earlier verified record showing:
-
-71,800 km
-
-The system detects the inconsistency and marks the vehicle:
-
-🔴 Suspicious
+The system detects the inconsistency and marks the vehicle: _Suspicious_
 
 The buyer can see the underlying records and use this information to renegotiate the price or walk away from the purchase.
 
-**🌍 Real-World Applications**
+**Real-World Applications**
 
 Vehicle Passport can be used by:
 Used-car marketplaces and dealers
@@ -226,7 +224,7 @@ Banks and lenders
 Service centres and garages
 Used-car buyers and sellers
 
-**🔮 Future Scope**
+**Future Scope**
 
 Public blockchain/testnet deployment
 Dynamic issuer registry
@@ -237,7 +235,7 @@ Real evidence/document storage
 Production authentication
 Integration with inspection centres and used-car marketplaces
 
-**⚠️ Prototype Scope**
+**Prototype Scope**
 
 The current prototype uses:
 
@@ -248,15 +246,15 @@ Demo vehicle records
 
 Production deployment would require a dynamic issuer registry, production authentication, secure evidence storage, and deployment to a public network.
 
-**👥 Team**
+**Team**
 
-Team Name: [Your Team Name]
+Team Name: Parallax
 
 Team Members:
 
-[Member 1]
-[Member 2]
-[Member 3]
-[Member 4]
+Palak Chandak
+Sanskruti Karwa
+Shreya R
+Mehek Shaha
 
 
