@@ -31,6 +31,7 @@ Allowing owners to share the vehicle passport through a QR/link
 **Architecture**
 
 1. Presentation Layer
+   
 React + Vite
 
 TypeScript
@@ -39,38 +40,59 @@ Role-based views: **Buyer, Owner, Issuer**
 
 Passport, Proof Ledger and Investigation views
 
-3. Blockchain Integration
+2. Blockchain Integration
+   
 **ethers.js** for blockchain interaction
+
 VIN and evidence hashing
+
 Contract calls and on-chain data reading
+
 MetaMask for signing issuer transactions
 
-4. Smart Contract
+3. Smart Contract
+
 **Solidity**
+
 Append-only vehicle records indexed by hashed VIN
+
 Approved-issuer access control
+
 Lower mileage readings are flagged rather than rejected
+
 Corrections link to original records without modifying them
+
 Evidence is represented by keccak256 hashes
+
 Full vehicle timeline can be retrieved from the contract
 
-5. Blockchain Network
+4. Blockchain Network
+   
 Local **Hardhat** network
+
 Chain ID: 31337
+
 Reset and redeployment support for development and demos
 
-6. Analysis Service
+5. Analysis Service
+   
 **Node.js** backend
+
 REST API for vehicle analysis
+
 Deterministic rule engine checks:
       Mileage rollback
       History gaps
       Conflicting readings
+      
 Reads blockchain data without modifying it
 
-7. AI Explanation Layer
+6. AI Explanation Layer
+
 **Gemini**
+
 Converts the rule engine's result into a simple explanation
+
 The rules determine the verdict; the AI only explains it
 
 **Data Flow**
