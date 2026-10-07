@@ -48,6 +48,7 @@ Vehicle Passport works by:
 - Using an AI layer to explain the verdict in simple language (with a template fallback)
 - Allowing owners to share the vehicle passport through a QR/link
 - Comparing up to 3 vehicles side by side (checks passed, latest verified reading, longest gap)
+- Supporting ownership transfer, so the vehicle's full history moves with the car to the new owner while earlier records stay intact (a transfer fee applies, as described in the revenue model)
 
 ### What makes it different
 
@@ -175,7 +176,7 @@ Vehicle Passport separates record integrity from record truth:
 
 Install:
 
-- Node.js
+- **Node.js 22 LTS** (recommended). Hardhat does not support newer versions such as Node v25 and will show a warning, so use Node 22 LTS.
 - Git
 - MetaMask
 
@@ -189,13 +190,25 @@ cd frontend
 npm install
 ```
 
-Copy `.env.example` to `.env` in the project root and add your Gemini API key:
+Copy `.env.example` (included in the repository) to `.env` in the project root and add your Gemini API key:
 
 ```bash
 cp .env.example .env
 ```
 
-> ⚠️ Never commit `.env` or your API key to GitHub.
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+> ⚠️ Never commit `.env` or your API key to GitHub. `.env` is listed in `.gitignore`.
+
+### Ports
+
+| Service | Port |
+|---|---|
+| Hardhat local chain | 8545 |
+| Agent server (backend) | 3001 |
+| Vite frontend | 5173 |
 
 ### Start the Project
 
@@ -213,6 +226,8 @@ npm run reset
 node server/index.js
 ```
 
+> ⚠️ Restarting Hardhat wipes the deployed contract and all on-chain data. Whenever you restart `npx hardhat node`, run `npm run reset` again to redeploy before starting the backend.
+
 **3. Start the frontend**
 
 ```bash
@@ -220,7 +235,7 @@ cd frontend
 npm run dev
 ```
 
-Open the local URL shown in the terminal by Vite.
+Open the local URL shown in the terminal by Vite (http://localhost:5173).
 
 ### MetaMask
 
@@ -233,11 +248,16 @@ Connect MetaMask to:
 | Chain ID | 31337 |
 | Currency | ETH |
 
-Import the demo issuer account provided by the Hardhat node.
+Import the demo issuer accounts provided by the Hardhat node (private keys are printed in the terminal when you run `npx hardhat node`):
+
+| Hardhat Account | Role / Issuer |
+|---|---|
+| Account #0 | Deployer / Admin |
+| Account #1 | Service Centre issuer |
+| Account #2 | Inspection Centre issuer |
+| Account #3 | Insurer issuer |
 
 For a fresh demo, run the reset script before starting the application.
-
----
 
 ## Screenshots
 
