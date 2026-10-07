@@ -1,0 +1,58 @@
+import { ethers } from "ethers"
+import data from "./contract.json"
+
+const RPC = "http://127.0.0.1:8545"
+const AGENT = "http://localhost:3001"
+
+const vinHash = (vin: string) => ethers.keccak256(ethers.toUtf8Bytes(vin))
+
+async function ensureHardhat() {
+  const eth = (window as any).ethereum
+  if (!eth) throw new Error("MetaMask not found")
+  try {
+    await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x7a69" }] })
+  } catch (e: any) {
+    if (e.code === 4902) {
+      await eth.request({
+        method: "wallet_addEthereumChain",
+        params: [{
+          chainId: "0x7a69",
+          chainName: "Hardhat Local",
+          rpcUrls: ["http://127.0.0.1:8545"],
+          nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+        }],
+      })
+    } else throw e
+  }
+}
+
+export async function readTimeline(vin: string) {
+  const provider = new ethers.JsonRpcProvider(RPC)
+  const c = new ethers.Contract(data.address, data.abi, provider)
+  const rows = await c.getTimeline(vinHash(vin))
+  return rows.map((r: any, i: number) => ({
+    index: i,
+    km: Number(r.km),
+    issuer: (data.issuers as Record<string, string>)[r.issuer] ?? r.issuer,
+    issuerAddress: r.issuer as string,
+    flagged: r.flagged,
+    isCorrection: r.isCorrection,
+    evidenceHash: r.evidenceHash as string,
+  }))
+}
+
+export async function addReadingOnChain(vin: string, km: number, evidenceText: string) {
+  await ensureHardhat()
+  const provider = new ethers.BrowserProvider((window as any).ethereum)
+  const signer = await provider.getSigner()
+  const c = new ethers.Contract(data.address, data.abi, signer)
+  const tx = await c.addReading(vinHash(vin), km, ethers.keccak256(ethers.toUtf8Bytes(evidenceText)))
+  const receipt = await tx.wait()
+  return receipt.hash as string
+}
+
+export async function analyze(vin: string) {
+  const r = await fetch(`${AGENT}/api/analyze/${vin}`)
+  if (!r.ok) throw new Error("agent error")
+  return r.json()
+}

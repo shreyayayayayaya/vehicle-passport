@@ -1,0 +1,10 @@
+{
+  "description": "Vehicle Passport offers a tamper-evident digital history of vehicles, enabling buyers to verify odometer readings and service records from trusted issuers.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
