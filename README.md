@@ -250,13 +250,14 @@ Connect MetaMask to:
 
 Import the demo issuer accounts provided by the Hardhat node (private keys are printed in the terminal when you run `npx hardhat node`):
 
-| Hardhat Account | Role / Issuer |
-|---|---|
-| Account #0 | Deployer / Admin |
-| Account #1 | Service Centre issuer |
-| Account #2 | Inspection Centre issuer |
-| Account #3 | Insurer issuer |
+| Hardhat Account | Address | Role / Issuer |
+|---|---|---|
+| Account #0 | `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266` | Deployer / Admin |
+| Account #1 | `0x70997970C51812dc3A010C7d01b50e0d17dc79C8` | Service Centre issuer |
+| Account #2 | `0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC` | Inspection Centre issuer |
+| Account #3 | `0x90F79bf6EB2c4f870365E785982E1f101E93b906` | Insurer issuer |
 
+> ⚠️ These are Hardhat's default public test accounts. Never use them, or send real funds to them, on any live network.
 For a fresh demo, run the reset script before starting the application.
 
 ## Screenshots
