@@ -49,6 +49,7 @@ import {
 import { analyze, addReadingOnChain, readTimeline, verifyIntegrity, addCorrectionOnChain } from "./chain"
 import { useTimeline } from "./useTimeline"
 import { useSigner } from "./useSigner"
+import { OwnershipTransferFlow, TransferTimelineEntries, OwnershipHistoryPanel, useTransferRecords } from "./OwnershipTransfer"
 
 type Status = "Verified" | "Partially Verified" | "Suspicious"
 type RecordItem = {
@@ -1583,6 +1584,7 @@ function HashCopy({ full, short }: { full: string; short: string }) {
 function Proof({ v, setTab }: any) {
   const [state, setState] = useState("idle")
   const entries = useTimeline(v.vin)
+  const hasTransfer = useTransferRecords(v.vin).length > 0
   const [report, setReport] = useState<any>(null)
   const verify = () => {
     setState("checking")
@@ -1675,6 +1677,7 @@ function Proof({ v, setTab }: any) {
                   Correction of #{Number(e.correctsIndex) + 1}
                 </span>
               )}
+              {hasTransfer && <span className="chip">Previous owner</span>}
             </div>
           ))
         ) : v.records.map((r: RecordItem, i: number) => {
@@ -1702,9 +1705,11 @@ function Proof({ v, setTab }: any) {
               )}
               <span>{r.date}, 10:30 UTC</span>
               <span>{r.issuer}</span>
+              {hasTransfer && <span className="chip">Previous owner</span>}
             </div>
           )
         })}
+        <TransferTimelineEntries vin={v.vin} />
       </div>
       <div className="why-card">
         <div>
@@ -2268,18 +2273,27 @@ function Owner({
     setToast("Passport link copied")
     setTimeout(() => setToast(""), 1800)
   }
-  if (transfer) {
+      if (transfer) {
+    const t: any = transfer
+    const nameParts = String(t.name || "").split(" ")
+    const kms = (t.records || []).map((r: any) => r.km)
     return (
       <>
-        <OwnershipTransfer
-          vehicle={transfer}
-          cancel={() => setTransfer(null)}
-          complete={() => {
+        <OwnershipTransferFlow
+          back={() => setTransfer(null)}
+          vehicle={{
+            vin: t.vin,
+            make: nameParts[0] || "",
+            model: nameParts.slice(1).join(" "),
+            status: t.key === "A" ? "Suspicious" : "Verified",
+            lastVerifiedKm: kms.length ? Math.max(...kms) : 0,
+            flaggedCount: t.key === "A" ? 1 : 0,
+            ownerName: "Aarav",
+            records: t.records || [],
+          }}
+          onComplete={(r) => {
             onTransfer(transfer)
-            setTransfer(null)
-            setToast(
-              `Transferred to Meera Shah · ${transfer.name} timeline updated`,
-            )
+            setToast(`Transferred to ${r.buyerName} · ${t.name} timeline updated`)
           }}
         />
         <PageFooter />
@@ -2372,7 +2386,7 @@ function Owner({
                   </Button>
                   <Button kind="secondary" onClick={() => setTransfer(v)}>
                     <KeyRound />
-                    Sell this vehicle
+                    Sell or transferthis vehicle
                   </Button>
                 </div>
               )}
