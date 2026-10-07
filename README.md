@@ -268,6 +268,7 @@ Add screenshot of the main vehicle passport (passport summary) here.
 
 `![Vehicle Passport](docs/screenshots/passport.png)`
 
+
 ### Proof Ledger
 
 Add screenshot showing the on-chain vehicle timeline.
