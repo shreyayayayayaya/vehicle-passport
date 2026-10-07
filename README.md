@@ -281,6 +281,9 @@ For a fresh demo, run the reset script before starting the application.
 
 <img width="1279" height="680" alt="image" src="https://github.com/user-attachments/assets/15d473f2-a51f-4c92-92c2-e20fc95243fd" />
 
+### Blockchain and AI Architecture 
+
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/9b60d0fa-3479-4d6d-bf06-8ec6530f2129" />
 
 ---
 
