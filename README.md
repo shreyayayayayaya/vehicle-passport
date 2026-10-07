@@ -291,7 +291,8 @@ Add screenshot of the issuer interface.
 
 Add screenshot of the compare-up-to-3 view.
 
-`![Vehicle Comparison](docs/screenshots/comparison.png)`
+<img width="1279" height="673" alt="image" src="https://github.com/user-attachments/assets/80c4d1c2-5c0d-459e-b013-df7d869b928f" />
+
 
 ---
 
