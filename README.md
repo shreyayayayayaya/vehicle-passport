@@ -263,35 +263,23 @@ For a fresh demo, run the reset script before starting the application.
 ## Screenshots
 
 ### Vehicle Passport
-
-Add screenshot of the main vehicle passport (passport summary) here.
-
-`![Vehicle Passport](docs/screenshots/passport.png)`
-
+<img width="1263" height="677" alt="image" src="https://github.com/user-attachments/assets/f5f9fc95-cfa2-4e33-8c5f-333398c5131b" />
 
 ### Proof Ledger
 
-Add screenshot showing the on-chain vehicle timeline.
-
-`![Proof Ledger](docs/screenshots/proof-ledger.png)`
+<img width="1279" height="679" alt="image" src="https://github.com/user-attachments/assets/6c01eece-8484-444c-a754-6c2eb055a9f0" />
 
 ### Investigation
 
-Add screenshot showing the verdict and AI explanation.
-
-`![Investigation](docs/screenshots/investigation.png)`
+<img width="1279" height="677" alt="image" src="https://github.com/user-attachments/assets/074c80d4-d924-467c-b7b0-dbd9a39eb7fe" />
 
 ### Issuer View
 
-Add screenshot of the issuer interface.
-
-`![Issuer View](docs/screenshots/issuer.png)`
+<img width="1279" height="673" alt="image" src="https://github.com/user-attachments/assets/80c4d1c2-5c0d-459e-b013-df7d869b928f" />
 
 ### Vehicle Comparison
 
-Add screenshot of the compare-up-to-3 view.
-
-<img width="1279" height="673" alt="image" src="https://github.com/user-attachments/assets/80c4d1c2-5c0d-459e-b013-df7d869b928f" />
+<img width="1279" height="680" alt="image" src="https://github.com/user-attachments/assets/15d473f2-a51f-4c92-92c2-e20fc95243fd" />
 
 
 ---
