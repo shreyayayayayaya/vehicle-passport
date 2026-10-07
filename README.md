@@ -364,4 +364,4 @@ Production deployment would require a dynamic issuer registry, production authen
 - Shreya R
 - Mehek Shaha
 
-*PCET's Pimpri Chinchwad College of Engineering, Department of Computer Engineering. Built for DecentraHack.*
+
