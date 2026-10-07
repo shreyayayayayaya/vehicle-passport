@@ -32,17 +32,20 @@ Allowing owners to share the vehicle passport through a QR/link
 
 1. Presentation Layer
 React + Vite
+
 TypeScript
+
 Role-based views: **Buyer, Owner, Issuer**
+
 Passport, Proof Ledger and Investigation views
 
-2. Blockchain Integration
+3. Blockchain Integration
 **ethers.js** for blockchain interaction
 VIN and evidence hashing
 Contract calls and on-chain data reading
 MetaMask for signing issuer transactions
 
-3. Smart Contract
+4. Smart Contract
 **Solidity**
 Append-only vehicle records indexed by hashed VIN
 Approved-issuer access control
@@ -51,12 +54,12 @@ Corrections link to original records without modifying them
 Evidence is represented by keccak256 hashes
 Full vehicle timeline can be retrieved from the contract
 
-4. Blockchain Network
+5. Blockchain Network
 Local **Hardhat** network
 Chain ID: 31337
 Reset and redeployment support for development and demos
 
-5. Analysis Service
+6. Analysis Service
 **Node.js** backend
 REST API for vehicle analysis
 Deterministic rule engine checks:
@@ -65,7 +68,7 @@ Deterministic rule engine checks:
       Conflicting readings
 Reads blockchain data without modifying it
 
-6. AI Explanation Layer
+7. AI Explanation Layer
 **Gemini**
 Converts the rule engine's result into a simple explanation
 The rules determine the verdict; the AI only explains it
@@ -168,7 +171,8 @@ npm run dev
 Open the local URL shown by Vite, usually:
 
 http://localhost:8443
-MetaMask
+
+**MetaMask**
 
 Connect MetaMask to:
 
