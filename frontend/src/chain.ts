@@ -38,6 +38,8 @@ export async function readTimeline(vin: string) {
     flagged: r.flagged,
     isCorrection: r.isCorrection,
     evidenceHash: r.evidenceHash as string,
+        timestamp: Number(r.timestamp),
+    correctsIndex: Number(r.correctsIndex),
   }))
 }
 
@@ -55,4 +57,18 @@ export async function analyze(vin: string) {
   const r = await fetch(`${AGENT}/api/analyze/${vin}`)
   if (!r.ok) throw new Error("agent error")
   return r.json()
+}
+export async function verifyIntegrity(vin: string) {
+  const rows = await readTimeline(vin)
+  let max = 0
+  let flagOk = 0
+  let hashOk = 0
+  rows.forEach((e: any) => {
+    const expectedFlag = !e.isCorrection && e.km < max
+    if (!e.isCorrection && !expectedFlag) max = e.km
+    if (e.isCorrection || expectedFlag === e.flagged) flagOk++
+    const seedHash = ethers.keccak256(ethers.toUtf8Bytes(`${vin}-${e.km}-evidence`))
+    if (seedHash === e.evidenceHash) hashOk++
+  })
+  return { total: rows.length, flagOk, hashOk }
 }

@@ -46,7 +46,7 @@ import {
   X,
   XCircle,
 } from "lucide-react"
-import { analyze, addReadingOnChain, readTimeline } from "./chain"
+import { analyze, addReadingOnChain, readTimeline, verifyIntegrity } from "./chain"
 import { useTimeline } from "./useTimeline"
 import { useSigner } from "./useSigner"
 
@@ -1583,9 +1583,12 @@ function HashCopy({ full, short }: { full: string; short: string }) {
 function Proof({ v, setTab }: any) {
   const [state, setState] = useState("idle")
    const entries = useTimeline(v.vin)
-  const verify = () => {
+     const [report, setReport] = useState<any>(null)
+    const verify = () => {
     setState("checking")
-    setTimeout(() => setState("done"), 1800)
+    verifyIntegrity(v.vin)
+      .then((r) => { setReport(r); setState("done") })
+      .catch(() => setState("idle"))
   }
   return (
     <div className="tab-content">
@@ -1601,10 +1604,12 @@ function Proof({ v, setTab }: any) {
               : "Verify this passport's integrity"}
           </h2>
           <p>
-            {state === "done"
-              ? "No record has been altered or deleted."
-              : "Recalculate every content hash and follow the chain from first entry to latest."}
-          </p>
+  {state === "done"
+    ? report
+      ? `Contract rules replayed: ${report.flagOk}/${report.total} flags match. Evidence hashes recomputed: ${report.hashOk}/${report.total} match.`
+      : "No record has been altered or deleted."
+    : "Recalculate every content hash and follow the chain from first entry to latest."}
+</p>
         </div>
         <Button onClick={verify} disabled={state === "checking"}>
           {state === "checking" ? (
