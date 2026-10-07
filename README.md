@@ -180,13 +180,18 @@ Add your Gemini API key to the root .env file.
 Never commit .env or your API key to GitHub.
 
 Start the Project
-1. Start the local blockchain
+**1. Start the local blockchain**
+
 cd vehicle-passport
 npx hardhat node
-2. Reset/deploy and start the backend
+
+**2. Reset/deploy and start the backend**
+
 npm run reset
 node server/index.js
-3. Start the frontend
+
+**3. Start the frontend**
+
 cd frontend
 npm run dev
 
