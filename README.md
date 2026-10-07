@@ -183,16 +183,19 @@ Start the Project
 **1. Start the local blockchain**
 
 cd vehicle-passport
+
 npx hardhat node
 
 **2. Reset/deploy and start the backend**
 
 npm run reset
+
 node server/index.js
 
 **3. Start the frontend**
 
 cd frontend
+
 npm run dev
 
 Open the local URL shown by Vite, usually:
@@ -204,8 +207,11 @@ http://localhost:8443
 Connect MetaMask to:
 
 Network: Hardhat Local
+
 RPC: http://127.0.0.1:8545
+
 Chain ID: 31337
+
 Currency: ETH
 
 Import the demo issuer account provided by the Hardhat node.
