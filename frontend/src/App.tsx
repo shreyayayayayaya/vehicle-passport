@@ -46,7 +46,7 @@ import {
   X,
   XCircle,
 } from "lucide-react"
-import { analyze, addReadingOnChain, readTimeline, verifyIntegrity } from "./chain"
+import { analyze, addReadingOnChain, readTimeline, verifyIntegrity, addCorrectionOnChain } from "./chain"
 import { useTimeline } from "./useTimeline"
 import { useSigner } from "./useSigner"
 
@@ -1582,9 +1582,9 @@ function HashCopy({ full, short }: { full: string; short: string }) {
 
 function Proof({ v, setTab }: any) {
   const [state, setState] = useState("idle")
-   const entries = useTimeline(v.vin)
-     const [report, setReport] = useState<any>(null)
-    const verify = () => {
+  const entries = useTimeline(v.vin)
+  const [report, setReport] = useState<any>(null)
+  const verify = () => {
     setState("checking")
     verifyIntegrity(v.vin)
       .then((r) => { setReport(r); setState("done") })
@@ -1604,12 +1604,12 @@ function Proof({ v, setTab }: any) {
               : "Verify this passport's integrity"}
           </h2>
           <p>
-  {state === "done"
-    ? report
-      ? `Contract rules replayed: ${report.flagOk}/${report.total} flags match. Evidence hashes recomputed: ${report.hashOk}/${report.total} match.`
-      : "No record has been altered or deleted."
-    : "Recalculate every content hash and follow the chain from first entry to latest."}
-</p>
+            {state === "done"
+              ? report
+                ? `Contract rules replayed: ${report.flagOk}/${report.total} flags match. Evidence hashes recomputed: ${report.hashOk}/${report.total} match.`
+                : "No record has been altered or deleted."
+              : "Recalculate every content hash and follow the chain from first entry to latest."}
+          </p>
         </div>
         <Button onClick={verify} disabled={state === "checking"}>
           {state === "checking" ? (
@@ -1648,7 +1648,7 @@ function Proof({ v, setTab }: any) {
             <span className="kicker">
               {entries ? "Live ledger · read from the chain" : "Demo ledger (simulated)"}
             </span>
-                        <h2>Append-only record chain</h2>
+            <h2>Append-only record chain</h2>
           </div>
         </div>
         {entries ? (
@@ -1670,9 +1670,15 @@ function Proof({ v, setTab }: any) {
                   Flagged
                 </span>
               )}
+              {e.isCorrection && (
+                <span className="chip signed">
+                  Correction of #{Number(e.correctsIndex) + 1}
+                </span>
+              )}
             </div>
           ))
-        ) : v.records.map((r: RecordItem, i: number) => {          const fullHash = `0x${(r.id.charCodeAt(0) * 9281 + i * 771).toString(16).padEnd(62, "a")}${(r.km % 65535).toString(16).padStart(4, "0")}`
+        ) : v.records.map((r: RecordItem, i: number) => {
+          const fullHash = `0x${(r.id.charCodeAt(0) * 9281 + i * 771).toString(16).padEnd(62, "a")}${(r.km % 65535).toString(16).padStart(4, "0")}`
           const previousHash = i
             ? `0x${(v.records[i - 1].id.charCodeAt(0) * 9281 + (i - 1) * 771).toString(16).padEnd(62, "b")}`
             : "Genesis"
@@ -3899,10 +3905,25 @@ function Issuer({ selected, viewTimeline, onRecordAdded }: any) {
                         <b>cluster-replacement-invoice.pdf</b>
                         <span>Evidence attached</span>
                       </button>
-                      <Button onClick={() => setCorrection("tracking")}>
-                        <Send />
-                        Submit for verification
-                      </Button>
+                      <Button onClick={async () => {
+  setTxError("")
+  try {
+    const rows = await readTimeline(vehicle.vin)
+    const idx = rows.map((r: any) => r.flagged).lastIndexOf(true)
+    if (idx < 0) throw new Error("No flagged entry found")
+    await addCorrectionOnChain(
+      vehicle.vin, idx, Number(km),
+      `${vehicle.vin}|correction|${idx}|cluster-replacement-invoice.pdf`,
+    )
+    setCorrection("tracking")
+  } catch (err: any) {
+    setTxError(String(err?.reason || err?.shortMessage || err?.message || "Correction failed"))
+  }
+}}>
+  <Send />
+  Submit for verification
+</Button>
+{txError && <p style={{ color: "#dc2626", marginTop: 12 }}>{txError}</p>}
                     </>
                   ) : (
                     <>

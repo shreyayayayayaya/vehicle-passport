@@ -72,3 +72,12 @@ export async function verifyIntegrity(vin: string) {
   })
   return { total: rows.length, flagOk, hashOk }
 }
+export async function addCorrectionOnChain(vin: string, originalIndex: number, km: number, evidenceText: string) {
+  await ensureHardhat()
+  const provider = new ethers.BrowserProvider((window as any).ethereum)
+  const signer = await provider.getSigner()
+  const c = new ethers.Contract(data.address, data.abi, signer)
+  const tx = await c.addCorrection(vinHash(vin), originalIndex, km, ethers.keccak256(ethers.toUtf8Bytes(evidenceText)))
+  const receipt = await tx.wait()
+  return receipt.hash as string
+}
