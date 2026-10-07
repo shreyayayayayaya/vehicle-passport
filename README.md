@@ -33,40 +33,45 @@ Allowing owners to share the vehicle passport through a QR/link
 1. Presentation Layer
 React + Vite
 TypeScript
-Role-based views: Buyer, Owner, Issuer
+Role-based views: **Buyer, Owner, Issuer**
 Passport, Proof Ledger and Investigation views
 
-3. Blockchain Integration
-ethers.js for blockchain interaction
+2. Blockchain Integration
+**ethers.js** for blockchain interaction
 VIN and evidence hashing
 Contract calls and on-chain data reading
 MetaMask for signing issuer transactions
-5. Smart Contract
-Solidity
+
+3. Smart Contract
+**Solidity**
 Append-only vehicle records indexed by hashed VIN
 Approved-issuer access control
 Lower mileage readings are flagged rather than rejected
 Corrections link to original records without modifying them
 Evidence is represented by keccak256 hashes
 Full vehicle timeline can be retrieved from the contract
-6. Blockchain Network
-Local Hardhat network
+
+4. Blockchain Network
+Local **Hardhat** network
 Chain ID: 31337
 Reset and redeployment support for development and demos
-7. Analysis Service
-Node.js backend
+
+5. Analysis Service
+**Node.js** backend
 REST API for vehicle analysis
 Deterministic rule engine checks:
-Mileage rollback
-History gaps
-Conflicting readings
+      Mileage rollback
+      History gaps
+      Conflicting readings
 Reads blockchain data without modifying it
-8. AI Explanation Layer
-Gemini
+
+6. AI Explanation Layer
+**Gemini**
 Converts the rule engine's result into a simple explanation
 The rules determine the verdict; the AI only explains it
 
 **Data Flow**
+
 Issuer
 
    ↓
@@ -118,19 +123,20 @@ AI layer → explains the detected issues
 Blockchain cannot prove that an issuer's original reading is truthful. It proves that the record was not silently changed afterwards.
 
 **Tech Stack**
-Layer	Technologies
-Frontend	React, Vite, TypeScript
-Blockchain	Solidity, EVM
-Web3	ethers.js, MetaMask
-Development Network	Hardhat
-Backend	Node.js
-API	REST
-AI	Gemini
-Styling	CSS
-Development	Git, npm
+**Layer**	             **Technologies**
+Frontend	          React, Vite, TypeScript
+Blockchain	       Solidity, EVM
+Web3	             ethers.js, MetaMask
+Development        Network	Hardhat
+Backend	          Node.js
+API	             REST
+AI	                Gemini
+Styling	          CSS
+Development	       Git, npm
 
 **Setup**
-Prerequisites
+
+**Prerequisites**
 
 Install:
 
