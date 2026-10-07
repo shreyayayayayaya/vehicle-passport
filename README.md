@@ -12,7 +12,7 @@ npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Lock.js
 ```
 
-🚗 Vehicle Passport
+**🚗 Vehicle Passport**
 The meter can lie. The record can't.
 
 Vehicle Passport is a tamper-evident, VIN-linked vehicle history system designed to make used-car records more trustworthy.
