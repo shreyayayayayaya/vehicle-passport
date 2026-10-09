@@ -48,7 +48,12 @@ export async function addReadingOnChain(vin: string, km: number, evidenceText: s
   const provider = new ethers.BrowserProvider((window as any).ethereum)
   const signer = await provider.getSigner()
   const c = new ethers.Contract(data.address, data.abi, signer)
-  const tx = await c.addReading(vinHash(vin), km, ethers.keccak256(ethers.toUtf8Bytes(evidenceText)))
+const tx = await c.addReading(
+  vinHash(vin),
+  km,
+  ethers.keccak256(ethers.toUtf8Bytes(evidenceText)),
+  { gasLimit: 300000 }
+)
   const receipt = await tx.wait()
   return receipt.hash as string
 }
