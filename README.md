@@ -5,7 +5,7 @@
 
 **_The meter can lie. The record can't._**
 
-*Team Parallax · PCET's Pimpri Chinchwad College of Engineering, Department of Computer Engineering · DecentraHack*
+*Team Parallax ·*
 
 Vehicle Passport is a tamper-evident, VIN-linked vehicle history system designed to make used-car records more trustworthy.
 
